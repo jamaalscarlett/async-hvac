@@ -47,5 +47,9 @@ jobs:
 #      env:
 #        PATH: "root/.local/bin:/root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
       run: ./run_tests.sh
-    - name: Run test suite
-      run: tox run --skip-pkg-install -e py${{ matrix.env }}
+    - name: Run test suite vault 1.16.3
+      run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1163
+    - name: Run test suite vault 1.17.6
+      run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1176
+    - name: Run test suite vault 1.18.3
+      run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1183
