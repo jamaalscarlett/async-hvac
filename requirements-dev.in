@@ -1,0 +1,15 @@
+-r requirements.txt
+tox
+coverage
+nose
+asynctest
+semantic_version
+requests-mock
+aioresponses
+mock
+parameterized
+freezegun
+pytest
+setuptools
+pytest-cov
+pytest-html

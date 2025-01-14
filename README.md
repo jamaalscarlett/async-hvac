@@ -266,3 +266,14 @@ the latest `vault` binary is available in your `PATH`.
 ## Contributing
 
 Feel free to open pull requests with additional features or improvements!
+
+
+## Vault versions
+Tests are run against the last 3 versions of vault in line with Hashicorps support schedule. [LTS support](https://www.hashicorp.com/blog/vault-enterprise-long-term-support-lts-improves-operational-efficiency)
+
+### Current supported versions
+1.18.3
+
+1.17.6
+
+1.16.3

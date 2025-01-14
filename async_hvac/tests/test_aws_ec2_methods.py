@@ -1,4 +1,4 @@
-from asynctest import TestCase
+from unittest import IsolatedAsyncioTestCase
 
 from parameterized import parameterized
 
@@ -6,7 +6,7 @@ from async_hvac import AsyncClient
 from async_hvac.tests.util import RequestsMocker
 
 
-class TestAwsEc2Methods(TestCase):
+class TestAwsEc2Methods(IsolatedAsyncioTestCase):
     """Unit tests providing coverage for AWS (EC2) auth backend-related methods/routes."""
 
     @parameterized.expand([
