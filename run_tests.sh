@@ -28,5 +28,6 @@ for version in 1.16.3 1.17.6 1.18.3;
         mv /tmp/async-hvac/vault /tmp/async-hvac/vault_${version}
         rm /tmp/async-hvac/LICENSE.txt
     done
+ls /tmp/async-hvac
 cd $SRC_DIR
 tox

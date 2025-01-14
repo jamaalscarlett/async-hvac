@@ -28,16 +28,16 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install uv tox-gh-actions
+        pip install uv tox
+
+    - name: Install tox-uv
+      run: |
         uv tool install tox --with tox-uv
 
-    - name: Make setup script executable
+    - name: Make test script executable
       run: chmod +x ./run_tests.sh
         
-    - name: Run setup script
+    - name: Run test script
       env:
-        PATH: "root/.local/bin:${{ env.PATH }}"    
+        PATH: "root/.local/bin:/root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
       run: ./run_tests.sh
-      
-    - name: Run tox
-      run: tox
