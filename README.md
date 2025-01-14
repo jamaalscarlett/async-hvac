@@ -2,8 +2,8 @@
 
 [HashiCorp](https://hashicorp.com/) [Vault](https://www.vaultproject.io) API asyncio client for Python 3
 
-
-[![Travis CI](https://travis-ci.com/Aloomaio/async-hvac.svg?branch=master)](https://travis-ci.com/Aloomaio/async-hvac) [![Latest Version](https://img.shields.io/pypi/v/async-hvac.svg)](https://pypi.python.org/pypi/async-hvac/)
+![GitHub Actions Status](https://github.com/jamaalscarlett/async-hvac/actions/workflows/tests.yml/badge.svg) 
+![PYPI latest version](https://img.shields.io/pypi/v/async-hvac.svg)
 
 ## Getting started
 
