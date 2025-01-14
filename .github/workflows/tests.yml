@@ -35,7 +35,9 @@ jobs:
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install uv
+        pip install uv ruff
+    - name: Run Ruff
+      run: ruff check .        
     - name: Install tox
       run: uv tool install --python-preference only-managed --python 3.13 tox --with tox-uv
     - name: Install Python
