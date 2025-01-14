@@ -6,7 +6,7 @@ on:
     branches: [ master ]
     paths:
       - '**.py'
-      - 'run_tests.sh'
+      - 'download_vault.sh'
       - 'tox.ini'
       - 'requirements.txt'
       - 'pyproject.toml'
@@ -44,11 +44,9 @@ jobs:
       if: startsWith(matrix.env, '3.') && matrix.env != '3.13'
       run: uv python install --python-preference only-managed ${{ matrix.env }}
     - name: Make test script executable
-      run: chmod +x ./run_tests.sh
+      run: chmod +x ./download_vault.sh
     - name: Run test script
-#      env:
-#        PATH: "root/.local/bin:/root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
-      run: ./run_tests.sh
+      run: ./download_vault.sh
     - name: Run test suite vault 1.16.3
       run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1163
     - name: Run test suite vault 1.17.6
