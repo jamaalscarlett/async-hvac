@@ -29,5 +29,5 @@ for version in 1.16.3 1.17.6 1.18.3;
         rm /tmp/async-hvac/LICENSE.txt
     done
 ls /tmp/async-hvac
-cd $SRC_DIR
-tox
+# cd $SRC_DIR
+# tox

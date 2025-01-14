@@ -15,7 +15,15 @@ on:
 jobs:
   test:
     runs-on: ubuntu-latest
-    
+    strategy:
+      fail-fast: false
+      matrix:
+        env:
+          - "3.13"
+          - "3.12"
+          - "3.11"
+          - "3.10"
+          - "3.9"
     steps:
     - uses: actions/checkout@v4
     
@@ -24,20 +32,20 @@ jobs:
       with:
         python-version: '3.x'
         cache: 'pip'
-    
     - name: Install dependencies
       run: |
         python -m pip install --upgrade pip
-        pip install uv tox
-
-    - name: Install tox-uv
-      run: |
-        uv tool install tox --with tox-uv
-
+        pip install uv
+    - name: Install tox
+      run: uv tool install --python-preference only-managed --python 3.13 tox --with tox-uv
+    - name: Install Python
+      if: startsWith(matrix.env, '3.') && matrix.env != '3.13'
+      run: uv python install --python-preference only-managed ${{ matrix.env }}
     - name: Make test script executable
       run: chmod +x ./run_tests.sh
-        
     - name: Run test script
-      env:
-        PATH: "root/.local/bin:/root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
+#      env:
+#        PATH: "root/.local/bin:/root/.local/bin:/usr/local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin"
       run: ./run_tests.sh
+    - name: Run test suite
+      run: tox run --skip-pkg-install -e py${{ matrix.env }}
