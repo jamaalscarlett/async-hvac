@@ -3,7 +3,7 @@ name: Run Tests
 on:
   pull_request:
     types: [opened, synchronize]
-    branches: [ main ]
+    branches: [ master ]
     paths:
       - '**.py'
       - 'run_tests.sh'
