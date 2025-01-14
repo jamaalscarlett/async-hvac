@@ -4,16 +4,15 @@ import json
 import ssl
 from base64 import b64encode
 
+import aiohttp
+from async_hvac import aws_utils, exceptions
+
 try:
     import hcl
 
     has_hcl_parser = True
 except ImportError:
     has_hcl_parser = False
-import aiohttp
-
-from async_hvac import aws_utils
-from async_hvac import exceptions
 
 
 class AsyncClient(object):
@@ -36,6 +35,19 @@ class AsyncClient(object):
             self._sslcontext.load_cert_chain(self._cert[0], self._cert[1])
         else:
             self._sslcontext = False
+
+    def __enter__(self):
+        raise TypeError("Use async with instead")
+
+    def __exit__(self, exc_type, exc_val, exc_tb):
+        # __exit__ should exist in pair with __enter__ but never executed
+        pass  # pragma: no cover
+
+    async def __aenter__(self):
+        return self
+
+    async def __aexit__(self, exc_type, exc_val, exc_tb):
+        await self.close()
 
     @property
     def session(self):
@@ -99,7 +111,10 @@ class AsyncClient(object):
         """
         GET /sys/init
         """
-        return (await (await self._get('/v1/sys/init')).json())['initialized']
+        return (await self.get_init())['initialized']
+
+    async def get_init(self):
+        return (await (await self._get('/v1/sys/init')).json())
 
     async def initialize(self, secret_shares=5, secret_threshold=3, pgp_keys=None):
         """
@@ -116,7 +131,7 @@ class AsyncClient(object):
 
             params['pgp_keys'] = pgp_keys
 
-        return await (await self._put('/v1/sys/init', json=params)).json()
+        return await (await self._post('/v1/sys/init', json=params)).json()
 
     @property
     async def seal_status(self):
@@ -546,11 +561,12 @@ class AsyncClient(object):
         POST /auth/token/renew-self
         """
         params = {
-            'increment': increment,
+            "increment": increment,
+            "token": token,
         }
 
         if token:
-            path = '/v1/auth/token/renew/{0}'.format(token)
+            path = "/v1/auth/token/renew"
             return await (await self._post(path, json=params, wrap_ttl=wrap_ttl)).json()
         else:
             return await (await self._post('/v1/auth/token/renew-self', json=params, wrap_ttl=wrap_ttl)).json()
@@ -1226,7 +1242,7 @@ class AsyncClient(object):
 
         return self.auth('/v1/auth/{0}/login'.format(mount_point), json=params, use_token=use_token)
 
-    def create_kubernetes_configuration(self, kubernetes_host, kubernetes_ca_cert=None, token_reviewer_jwt=None, pem_keys=None, mount_point='kubernetes'):
+    def create_kubernetes_configuration(self, kubernetes_host, kubernetes_ca_cert=None, token_reviewer_jwt=None, pem_keys=None, mount_point='kubernetes', disable_local_ca_jwt=False):
         """
         POST /auth/<mount_point>/config
         :param kubernetes_host: str, a host:port pair, or a URL to the base of the Kubernetes API server.
@@ -1239,9 +1255,16 @@ class AsyncClient(object):
         :param mount_point: str, The "path" the k8s auth backend was mounted on. Vault currently defaults to "kubernetes".
         :return: requests.Response, will be an empty body with a 204 status code upon success
         """
+        if kubernetes_ca_cert:
+            with open(kubernetes_ca_cert) as f:
+                blob = f.readlines()
+                ca_cert = "".join(blob)
+        else:
+            ca_cert = None
         params = {
             'kubernetes_host': kubernetes_host,
-            'kubernetes_ca_cert': kubernetes_ca_cert,
+            "disable_local_ca_jwt": disable_local_ca_jwt,
+            'kubernetes_ca_cert': ca_cert,  # "test/ca.crt",  # kubernetes_ca_cert,
         }
 
         if token_reviewer_jwt is not None:

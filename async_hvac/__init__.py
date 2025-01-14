@@ -2,13 +2,14 @@ import asyncio
 import concurrent
 
 from async_hvac.v1 import AsyncClient
+from types import coroutine
 
 
 def async_to_sync(self, f):
     def wrapper(*args, **kwargs):
         if self._loop.is_running():
             return f(*args, **kwargs)
-        coro = asyncio.coroutine(f)
+        coro = coroutine(f)
         future = coro(*args, **kwargs)
         return self._executor.submit(
             self._loop.run_until_complete,
