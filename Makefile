@@ -10,16 +10,13 @@ download_vault:
 		./download_vault.sh; \
 	fi
 
-version:
-	cp version async_hvac/version
-
 clean:
 	rm -rf dist async_hvac.egg-info
 
 distclean: clean
 	rm -rf build async_hvac/version .tox
 
-package: version
+package:
 	python setup.py sdist
 
 .PHONY: clean package publish test version
