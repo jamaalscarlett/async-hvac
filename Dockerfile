@@ -3,7 +3,7 @@ FROM python:3.12-slim-bullseye
 COPY download_vault.sh /download_vault.sh
 COPY docker_tests.sh /docker_tests.sh
 COPY async_hvac/ /src/async_hvac/
-COPY test/ /src/test/
+COPY test-fixtures/ /src/test-fixtures/
 COPY tox.ini /src/
 COPY requirements-dev.txt /src/
 

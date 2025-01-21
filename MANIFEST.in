@@ -1,1 +1,3 @@
-include async_hvac/version
+include VERSION
+include README.md
+include LICENSE.txt

@@ -1458,7 +1458,7 @@ class AsyncClient(object):
         params = {
             "kubernetes_host": kubernetes_host,
             "disable_local_ca_jwt": disable_local_ca_jwt,
-            "kubernetes_ca_cert": ca_cert,  # "test/ca.crt",  # kubernetes_ca_cert,
+            "kubernetes_ca_cert": ca_cert,
         }
 
         if token_reviewer_jwt is not None:

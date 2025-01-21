@@ -13,16 +13,16 @@ def create_client(sync=False, **kwargs):
     if sync:
         return Client(
             url="https://127.0.0.1:8200",
-            cert=("test/client-cert.pem", "test/client-key.pem"),
-            verify="test/server-cert.pem",
+            cert=("test-fixtures/client-cert.pem", "test-fixtures/client-key.pem"),
+            verify="test-fixtures/server-cert.pem",
             loop=loop,
             **kwargs
         )
     else:
         return AsyncClient(
             url="https://127.0.0.1:8200",
-            cert=("test/client-cert.pem", "test/client-key.pem"),
-            verify="test/server-cert.pem",
+            cert=("test-fixtures/client-cert.pem", "test-fixtures/client-key.pem"),
+            verify="test-fixtures/server-cert.pem",
             loop=IntegrationTest.get_loop(),
             # loop=loop,
             **kwargs
@@ -36,7 +36,7 @@ class IntegrationTest(IsolatedAsyncioTestCase):
     @classmethod
     def setUpClass(cls):
         cls.manager = util.ServerManager(
-            config_path="test/vault-tls.hcl", client=create_client(sync=True)
+            config_path="test-fixtures/vault-tls.hcl", client=create_client(sync=True)
         )
         cls.manager.start()
         cls.manager.initialize()
@@ -843,7 +843,7 @@ class IntegrationTest(IsolatedAsyncioTestCase):
         client = self.get_client()
         await client.enable_auth_backend("cert")
 
-        with open("test/client-cert.pem") as fp:
+        with open("test-fixtures/client-cert.pem") as fp:
             certificate = fp.read()
 
         await client.write(
@@ -1315,7 +1315,7 @@ class IntegrationTest(IsolatedAsyncioTestCase):
         client.token = None
 
         # Load a mock PKCS7 encoded self-signed certificate to stand in for a real document from the AWS identity service.
-        with open("test/identity_document.p7b") as fp:
+        with open("test-fixtures/identity_document.p7b") as fp:
             pkcs7 = fp.read()
 
         # When attempting to auth (POST) to an auth backend mounted at a different path than the default, we expect a
@@ -1344,7 +1344,7 @@ class IntegrationTest(IsolatedAsyncioTestCase):
         client.token = None
 
         # Load a mock PKCS7 encoded self-signed certificate to stand in for a real document from the AWS identity service.
-        with open("test/identity_document.p7b") as fp:
+        with open("test-fixtures/identity_document.p7b") as fp:
             pkcs7 = fp.read()
 
         # If our custom path is respected, we'll still end up with Vault's inability to decrypt our dummy PKCS7 string.
@@ -1373,7 +1373,7 @@ class IntegrationTest(IsolatedAsyncioTestCase):
         client.token = None
 
         # Load a mock JWT stand in for a real document from GCP.
-        with open("test/example.jwt") as fp:
+        with open("test-fixtures/example.jwt") as fp:
             jwt = fp.read()
 
         # When attempting to auth (POST) to an auth backend mounted at a different path than the default, we expect a
@@ -1434,13 +1434,13 @@ class IntegrationTest(IsolatedAsyncioTestCase):
             await client.disable_auth_backend(test_mount_point)
         await client.enable_auth_backend("kubernetes", mount_point=test_mount_point)
 
-        with open("test/client-cert.pem") as fp:
+        with open("test-fixtures/client-cert.pem") as fp:
             certificate = fp.read()
             response = await client.create_kubernetes_configuration(
                 kubernetes_host="127.0.0.1:80",
                 pem_keys=[certificate],
                 mount_point=test_mount_point,
-                kubernetes_ca_cert="test/ca.crt",
+                kubernetes_ca_cert="test-fixtures/ca.crt",
             )
         self.assertEqual(
             first=expected_status_code,
@@ -1460,13 +1460,13 @@ class IntegrationTest(IsolatedAsyncioTestCase):
         if "{0}/".format(test_mount_point) in (await client.list_auth_backends()):
             await client.disable_auth_backend(test_mount_point)
         await client.enable_auth_backend("kubernetes", mount_point=test_mount_point)
-        with open("test/client-cert.pem") as fp:
+        with open("test-fixtures/client-cert.pem") as fp:
             certificate = fp.read()
             await client.create_kubernetes_configuration(
                 kubernetes_host=test_host,
                 pem_keys=[certificate],
                 mount_point=test_mount_point,
-                kubernetes_ca_cert="test/ca.crt",
+                kubernetes_ca_cert="test-fixtures/ca.crt",
             )
 
         # Test that we can retrieve the configuration
@@ -1495,13 +1495,13 @@ class IntegrationTest(IsolatedAsyncioTestCase):
             await client.disable_auth_backend(test_mount_point)
         await client.enable_auth_backend("kubernetes", mount_point=test_mount_point)
 
-        with open("test/client-cert.pem") as fp:
+        with open("test-fixtures/client-cert.pem") as fp:
             certificate = fp.read()
             await client.create_kubernetes_configuration(
                 kubernetes_host="127.0.0.1:80",
                 pem_keys=[certificate],
                 mount_point=test_mount_point,
-                kubernetes_ca_cert="test/ca.crt",
+                kubernetes_ca_cert="test-fixtures/ca.crt",
             )
 
         # Test that we can createa role
@@ -1530,13 +1530,13 @@ class IntegrationTest(IsolatedAsyncioTestCase):
             await client.disable_auth_backend(test_mount_point)
         await client.enable_auth_backend("kubernetes", mount_point=test_mount_point)
 
-        with open("test/client-cert.pem") as fp:
+        with open("test-fixtures/client-cert.pem") as fp:
             certificate = fp.read()
             await client.create_kubernetes_configuration(
                 kubernetes_host="127.0.0.1:80",
                 pem_keys=[certificate],
                 mount_point=test_mount_point,
-                kubernetes_ca_cert="test/ca.crt",
+                kubernetes_ca_cert="test-fixtures/ca.crt",
             )
 
         # Test that we can createa role
@@ -1572,13 +1572,13 @@ class IntegrationTest(IsolatedAsyncioTestCase):
             await client.disable_auth_backend(test_mount_point)
         await client.enable_auth_backend("kubernetes", mount_point=test_mount_point)
 
-        with open("test/client-cert.pem") as fp:
+        with open("test-fixtures/client-cert.pem") as fp:
             certificate = fp.read()
             await client.create_kubernetes_configuration(
                 kubernetes_host="127.0.0.1:80",
                 pem_keys=[certificate],
                 mount_point=test_mount_point,
-                kubernetes_ca_cert="test/ca.crt",
+                kubernetes_ca_cert="test-fixtures/ca.crt",
             )
 
         # Test that we can createa role
@@ -1610,13 +1610,13 @@ class IntegrationTest(IsolatedAsyncioTestCase):
             await client.disable_auth_backend(test_mount_point)
         await client.enable_auth_backend("kubernetes", mount_point=test_mount_point)
 
-        with open("test/client-cert.pem") as fp:
+        with open("test-fixtures/client-cert.pem") as fp:
             certificate = fp.read()
             await client.create_kubernetes_configuration(
                 kubernetes_host="127.0.0.1:80",
                 pem_keys=[certificate],
                 mount_point=test_mount_point,
-                kubernetes_ca_cert="test/ca.crt",
+                kubernetes_ca_cert="test-fixtures/ca.crt",
             )
 
         await client.create_kubernetes_role(
@@ -1648,13 +1648,13 @@ class IntegrationTest(IsolatedAsyncioTestCase):
         if "{0}/".format(test_mount_point) in (await client.list_auth_backends()):
             await client.disable_auth_backend(test_mount_point)
         await client.enable_auth_backend("kubernetes", mount_point=test_mount_point)
-        with open("test/client-cert.pem") as fp:
+        with open("test-fixtures/client-cert.pem") as fp:
             certificate = fp.read()
             await client.create_kubernetes_configuration(
                 kubernetes_host=test_host,
                 pem_keys=[certificate],
                 mount_point=test_mount_point,
-                kubernetes_ca_cert="test/ca.crt",
+                kubernetes_ca_cert="test-fixtures/ca.crt",
             )
 
         await client.create_kubernetes_role(
@@ -1665,7 +1665,7 @@ class IntegrationTest(IsolatedAsyncioTestCase):
         )
 
         # Test that we can authenticate
-        with open("test/example.jwt") as fp:
+        with open("test-fixtures/example.jwt") as fp:
             test_jwt = fp.read()
             # TODO on previous verisons of vault this will be InternalServerError but now it is Forbidden
             with self.assertRaises(exceptions.Forbidden) as assertRaisesContext:
