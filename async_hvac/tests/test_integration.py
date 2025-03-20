@@ -748,13 +748,18 @@ class IntegrationTest(IsolatedAsyncioTestCase):
         )["data"]["valid"]
         assert verify_resp
 
+        extra_kwargs = {}
+        current_vault_version = util.get_vault_version()
+        assert current_vault_version in ["1.16.3", "1.17.6", "1.18.5", "1.19.0"]
+        if current_vault_version < "1.19.0":
+            extra_kwargs = {"algorithm": "sha2-512"}
         signed_resp = (
-            await client.transit_sign_data("foo", "abbaabba", algorithm="sha2-512")
+            await client.transit_sign_data("foo", "abbaabba", **extra_kwargs)
         )["data"]["signature"]
         assert signed_resp
         verify_resp = (
             await client.transit_verify_signed_data(
-                "foo", "abbaabba", algorithm="sha2-512", signature=signed_resp
+                "foo", "abbaabba", signature=signed_resp, **extra_kwargs
             )
         )["data"]["valid"]
         assert verify_resp

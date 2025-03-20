@@ -58,6 +58,14 @@ class ServerManager(object):
 
 
 VERSION_REGEX = re.compile("Vault v([0-9]+)")
+VERSION_REGEX_2 = re.compile(r"Vault v(\d+\.\d+\.\d+)")
+
+
+def get_vault_version():
+    """Returns the current Vault version"""
+    vault_bin = os.environ.get("VAULT_BINARY", "vault")
+    output = subprocess.check_output([vault_bin, "version"]).decode("ascii")
+    return VERSION_REGEX_2.match(output).group(1)
 
 
 def match_version(spec):

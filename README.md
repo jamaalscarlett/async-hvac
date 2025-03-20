@@ -281,7 +281,10 @@ Feel free to open pull requests with additional features or improvements!
 Tests are run against the last 3 versions of vault in line with Hashicorps support schedule. [LTS support](https://www.hashicorp.com/blog/vault-enterprise-long-term-support-lts-improves-operational-efficiency)
 
 ### Current supported versions
-1.18.3
+
+1.19.0
+
+1.18.5
 
 1.17.6
 

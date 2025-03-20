@@ -6,7 +6,8 @@ test: version download_vault
 download_vault:
 	if [[ ! -f "/tmp/async-hvac/vault_1.16.3" || \
 	      ! -f "/tmp/async-hvac/vault_1.17.6" || \
-	      ! -f "/tmp/async-hvac/vault_1.18.3" ]]; then \
+	      ! -f "/tmp/async-hvac/vault_1.18.5" || \
+		  ! -f "/tmp/async-hvac/vault_1.19.0" ]]; then \
 		./download_vault.sh; \
 	fi
 

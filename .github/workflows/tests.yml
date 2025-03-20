@@ -52,5 +52,7 @@ jobs:
       run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1163
     - name: Run test suite vault 1.17.6
       run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1176
-    - name: Run test suite vault 1.18.3
-      run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1183
+    - name: Run test suite vault 1.18.5
+      run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1185
+    - name: Run test suite vault 1.19.0
+      run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1190
