@@ -110,7 +110,7 @@ pytest-metadata==3.1.1
     # via pytest-html
 python-dateutil==2.9.0.post0
     # via freezegun
-requests==2.32.3
+requests==2.32.4
     # via requests-mock
 requests-mock==1.12.1
     # via -r requirements-dev.in
