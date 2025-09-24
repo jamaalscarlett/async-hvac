@@ -126,12 +126,12 @@ tomli==2.2.1
     #   tox
 tox==4.23.2
     # via -r requirements-dev.in
-typing-extensions==4.13.2
+typing-extensions==4.14.0
     # via
     #   exceptiongroup
     #   multidict
     #   tox
-urllib3==2.3.0
+urllib3==2.5.0
     # via requests
 virtualenv==20.28.1
     # via tox
