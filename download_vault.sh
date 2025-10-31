@@ -18,7 +18,7 @@ download_version () {
   echo $url
 }
 
-for version in 1.16.3 1.17.6 1.18.5 1.19.0; 
+for version in 1.18.5 1.19.5 1.20.4 1.21.0; 
     do  url="$(download_version $version)"
         echo $url
         wget $url -O /tmp/async-hvac/vault_${version}.zip

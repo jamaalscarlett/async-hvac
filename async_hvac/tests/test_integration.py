@@ -750,7 +750,7 @@ class IntegrationTest(IsolatedAsyncioTestCase):
 
         extra_kwargs = {}
         current_vault_version = util.get_vault_version()
-        assert current_vault_version in ["1.16.3", "1.17.6", "1.18.5", "1.19.0"]
+        assert current_vault_version in ["1.18.5", "1.19.5", "1.20.4", "1.21.0"]
         if current_vault_version < "1.19.0":
             extra_kwargs = {"algorithm": "sha2-512"}
         signed_resp = (
@@ -1493,7 +1493,8 @@ class IntegrationTest(IsolatedAsyncioTestCase):
         client = self.get_client()
         test_role_name = "test_role"
         test_mount_point = "k8s"
-        expected_status_code = 204
+        current_vault_version = util.get_vault_version()
+        expected_status_code = 204 if current_vault_version < "1.20.0" else 200
 
         # Turn on the kubernetes backend with a custom mount_point path specified.
         if "{0}/".format(test_mount_point) in (await client.list_auth_backends()):
