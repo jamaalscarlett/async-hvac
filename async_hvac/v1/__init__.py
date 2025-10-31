@@ -269,13 +269,17 @@ class AsyncClient(object):
 
         resp = await self._put("/v1/sys/rekey/init", json=params)
         if resp.text:
+            response_data = await resp.json()
+            self.init_nonce = response_data.get("nonce")
             return await resp.json()
 
     def cancel_rekey(self):
         """
         DELETE /sys/rekey/init
         """
-        return self._delete("/v1/sys/rekey/init")
+        headers = {"X-Vault-Token": self.token}
+        payload = {"nonce": self.init_nonce} if self.init_nonce else {}
+        return self._delete("/v1/sys/rekey/init", headers=headers, json=payload)
 
     async def rekey(self, key, nonce=None):
         """
