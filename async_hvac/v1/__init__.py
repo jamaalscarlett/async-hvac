@@ -1907,7 +1907,7 @@ class AsyncClient(object):
             headers = {}
 
         if self.token:
-            headers["X-Vault-Token"] = self.token
+            headers["X-Vault-Token"] = self.token.strip()
 
         wrap_ttl = kwargs.pop("wrap_ttl", None)
         if wrap_ttl:
