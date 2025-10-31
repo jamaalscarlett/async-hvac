@@ -48,11 +48,11 @@ jobs:
       run: chmod +x ./download_vault.sh
     - name: Run test script
       run: ./download_vault.sh
-    - name: Run test suite vault 1.16.3
-      run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1163
-    - name: Run test suite vault 1.17.6
-      run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1176
     - name: Run test suite vault 1.18.5
       run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1185
-    - name: Run test suite vault 1.19.0
-      run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1190
+    - name: Run test suite vault 1.19.5
+      run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1195
+    - name: Run test suite vault 1.20.4
+      run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1204
+    - name: Run test suite vault 1.21.0
+      run: tox run --skip-pkg-install -e py${{ matrix.env }}-vault1210
