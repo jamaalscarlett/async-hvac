@@ -88,11 +88,13 @@ propcache==0.2.1
     #   -r requirements.txt
     #   aiohttp
     #   yarl
+pygments==2.20.0
+    # via pytest
 pyhcl==0.4.5
     # via -r requirements.txt
 pyproject-api==1.8.0
     # via tox
-pytest==8.3.4
+pytest==9.0.3
     # via
     #   -r requirements-dev.in
     #   pytest-cov
