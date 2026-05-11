@@ -116,7 +116,7 @@ six==1.17.0
     # via python-dateutil
 tox==4.23.2
     # via -r requirements-dev.in
-urllib3==2.5.0
+urllib3==2.7.0
     # via requests
 virtualenv==20.28.1
     # via tox
