@@ -1,0 +1,6 @@
+# Match the package's minimum supported Python version.
+target-version = "py39"
+
+[lint]
+# Preserve Ruff's original default checks explicitly as its defaults evolve.
+select = ["E4", "E7", "E9", "F"]

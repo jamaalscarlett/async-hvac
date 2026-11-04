@@ -11,6 +11,7 @@ on:
       - 'requirements.txt'
       - 'pyproject.toml'
       - 'setup.py'
+      - 'ruff.toml'
 
 jobs:
   test:

@@ -6,6 +6,8 @@
 /dist
 /*.egg-info
 /.tox
+/docs/_build/
+/.venv-docs/
 
 /.coverage
 /cover

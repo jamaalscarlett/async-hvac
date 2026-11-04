@@ -276,6 +276,12 @@ the latest `vault` binary is available in your `PATH`.
 
 Feel free to open pull requests with additional features or improvements!
 
+### Documentation
+
+The usage guide is built from this README with Sphinx and MyST. See
+[Building the documentation](docs/contributing.md) for local build commands
+and Read the Docs setup instructions.
+
 
 ## Vault versions
 Tests are run against the last 3 versions of vault in line with Hashicorps support schedule. [LTS support](https://www.hashicorp.com/blog/vault-enterprise-long-term-support-lts-improves-operational-efficiency)
