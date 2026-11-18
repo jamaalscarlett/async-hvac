@@ -9,8 +9,10 @@ on:
       - 'download_vault.sh'
       - 'tox.ini'
       - 'requirements.txt'
+      - 'requirements-dev.txt'
+      - 'tox-constraints.txt'
+      - '.github/workflows/tests.yml'
       - 'pyproject.toml'
-      - 'setup.py'
       - 'ruff.toml'
 
 jobs:
@@ -25,7 +27,6 @@ jobs:
           - "3.12"
           - "3.11"
           - "3.10"
-          - "3.9"
     steps:
     - uses: actions/checkout@v5
     
@@ -41,7 +42,7 @@ jobs:
     - name: Run Ruff
       run: ruff check .        
     - name: Install tox
-      run: uv tool install --python-preference only-managed --python 3.13 tox --with tox-uv
+      run: uv tool install --python-preference only-managed --python 3.13 tox --with tox-uv -c tox-constraints.txt
     - name: Install Python
       if: startsWith(matrix.env, '3.') && matrix.env != '3.13'
       run: uv python install --python-preference only-managed ${{ matrix.env }}

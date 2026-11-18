@@ -696,7 +696,7 @@ class AsyncClient(object):
         """
         Helper method which returns the authentication status of the client
         """
-        if not self.token:
+        if not self.token or any(ord(char) < 32 or ord(char) == 127 for char in self.token.strip()):
             return False
 
         try:

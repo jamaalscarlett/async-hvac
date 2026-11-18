@@ -783,12 +783,8 @@ class IntegrationTest(IsolatedAsyncioTestCase):
         await client.close()
 
     async def test_broken_token(self):
-        client = create_client(token="\x1b")
-        try:
-            await client.is_authenticated()
-        except exceptions.InvalidRequest as e:
-            assert "invalid header value" in str(e)
-        await client.close()
+        async with create_client(token="\x1b") as client:
+            assert not await client.is_authenticated()
 
     async def test_client_authenticated(self):
         client = self.get_client()

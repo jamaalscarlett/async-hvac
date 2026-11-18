@@ -269,8 +269,11 @@ Integration tests will automatically start a Vault server in the background. Jus
 the latest `vault` binary is available in your `PATH`.
 
 1. [Install Vault](https://vaultproject.io/docs/install/index.html) or execute `VAULT_BRANCH=release scripts/install-vault-release.sh`
-2. [Install Tox](http://tox.readthedocs.org/en/latest/install.html)
+2. Install tox with Python 3.11 or newer using `uv tool install --python 3.11 tox --with tox-uv -c tox-constraints.txt`.
 3. Run tests: `make test`
+
+Run `make test-codex` for a quiet test run on Python 3.10 with Vault 1.21.0.
+It prints test output only when a command fails.
 
 ## Contributing
 

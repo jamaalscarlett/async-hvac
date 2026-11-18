@@ -1,0 +1,40 @@
+[build-system]
+requires = ["setuptools>=77"]
+build-backend = "setuptools.build_meta"
+
+[project]
+name = "async-hvac"
+description = "HashiCorp Vault API python 3.10+ client using asyncio."
+readme = "README.md"
+requires-python = ">=3.10"
+license = "Apache-2.0"
+license-files = ["LICENSE.txt"]
+authors = [{ name = "Lionel Zerbib", email = "lionel@alooma.io" }]
+maintainers = [{ name = "Jamaal Scarlett", email = "jamaalscarlett.github@gmail.com" }]
+keywords = ["hashicorp", "vault", "hvac"]
+classifiers = [
+    "Development Status :: 5 - Production/Stable",
+    "Intended Audience :: Developers",
+    "Programming Language :: Python :: 3",
+    "Programming Language :: Python :: 3.10",
+    "Programming Language :: Python :: 3.11",
+    "Programming Language :: Python :: 3.12",
+    "Programming Language :: Python :: 3.13",
+    "Programming Language :: Python :: 3.14",
+]
+dependencies = ["aiohttp>=3.14.4", "idna>=3.15"]
+dynamic = ["version"]
+
+[project.optional-dependencies]
+parser = ["pyhcl>=0.4.5"]
+
+[project.urls]
+Homepage = "https://github.com/jamaalscarlett/async-hvac"
+Download = "https://github.com/jamaalscarlett/async-hvac/tarball/master"
+
+[tool.setuptools.dynamic]
+version = { file = "VERSION" }
+
+[tool.setuptools.packages.find]
+include = ["async_hvac", "async_hvac.*"]
+namespaces = false
