@@ -2,6 +2,9 @@ import os
 import re
 import subprocess
 import time
+from types import SimpleNamespace
+
+from aiohttp import ClientResponse
 from aioresponses import aioresponses
 import json as json_util
 
@@ -76,10 +79,21 @@ def match_version(spec):
     return Spec(spec).match(version)
 
 
+class MockClientResponse(ClientResponse):
+    def __init__(self, *args, **kwargs):
+        # Mock responses have no request stream, but aiohttp reads its output size.
+        kwargs.setdefault("stream_writer", SimpleNamespace(output_size=0))
+        super().__init__(*args, **kwargs)
+
+
 class RequestsMocker(aioresponses):
 
     def __init__(self):
         super(RequestsMocker, self).__init__()
+
+    def add(self, *args, **kwargs):
+        kwargs.setdefault("response_class", MockClientResponse)
+        return super().add(*args, **kwargs)
 
     def register_uri(self, method="GET", url="", status_code=200, json=None):
         if json:

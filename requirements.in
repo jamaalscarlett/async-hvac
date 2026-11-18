@@ -1,2 +1,3 @@
-aiohttp
+aiohttp>=3.14.4
+idna>=3.15
 pyhcl

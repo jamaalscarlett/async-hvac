@@ -6,11 +6,12 @@ COPY async_hvac/ /src/async_hvac/
 COPY test-fixtures/ /src/test-fixtures/
 COPY tox.ini /src/
 COPY requirements-dev.txt /src/
+COPY tox-constraints.txt /
 
 RUN apt update
 RUN apt install -y wget zip gcc
 RUN pip install uv
-RUN uv tool install tox --with tox-uv
+RUN uv tool install tox --with tox-uv -c /tox-constraints.txt
 ENV PATH=/root/.local/bin:$PATH
 WORKDIR /src
 
