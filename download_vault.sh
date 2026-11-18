@@ -1,4 +1,5 @@
 #!/bin/bash
+set -e
 
 mkdir -p /tmp/async-hvac
 
@@ -18,7 +19,11 @@ download_version () {
   echo $url
 }
 
-for version in 1.18.5 1.19.5 1.20.4 1.21.0; 
+if [[ $# -eq 0 ]]; then
+    set -- 1.18.5 1.19.5 1.20.4 1.21.0
+fi
+
+for version in "$@";
     do  url="$(download_version $version)"
         echo $url
         wget $url -O /tmp/async-hvac/vault_${version}.zip

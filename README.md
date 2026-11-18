@@ -272,6 +272,9 @@ the latest `vault` binary is available in your `PATH`.
 2. Install tox with Python 3.11 or newer using `uv tool install --python 3.11 tox --with tox-uv -c tox-constraints.txt`.
 3. Run tests: `make test`
 
+Run `make test-codex` for a quiet test run on Python 3.10 with Vault 1.21.0.
+It prints test output only when a command fails.
+
 ## Contributing
 
 Feel free to open pull requests with additional features or improvements!

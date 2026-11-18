@@ -11,10 +11,8 @@ on:
       - 'requirements.txt'
       - 'requirements-dev.txt'
       - 'tox-constraints.txt'
-      - 'setup.cfg'
       - '.github/workflows/tests.yml'
       - 'pyproject.toml'
-      - 'setup.py'
       - 'ruff.toml'
 
 jobs:
